@@ -1,0 +1,39 @@
+Ovaj program predstavlja rešavač igre „Moj broj“. Korisnik unosi šest brojeva i ciljni broj, a program pokušava da pronađe tačno rešenje koristeći osnovne aritmetičke operacije:
+Sabiranje, Oduzimanje, Množenje, Deljenje.
+Ako tačno rešenje ne postoji, program pronalazi rezultat koji je najbliži zadatom cilju. Pored rezultata, program ispisuje i matematički izraz kojim je do tog rezultata došao.
+
+Program koristi Backtracking.
+U svakom koraku:
+1.Bira dva broja iz trenutnog skupa.
+2.Nad njima primenjuje sve dozvoljene operacije.
+3.Dobijeni rezultat vraća u skup brojeva.
+4.Rekurzivno nastavlja pretragu.
+5.Pamti najbolje pronađeno rešenje.
+Proces se ponavlja dok ne ostane samo jedan broj.
+
+Program ispituje veoma veliki broj kombinacija.
+Za 6 brojeva broj mogućih rešenja je dovoljno mali da program radi brzo na običnom računaru, veći broj brojeva značajno povećava vreme izvršavanja.
+
+PRIMER:
+ulaz:
+100
+75
+5
+3
+7
+8
+674
+izlaz:
+Cilj: 674
+
+Najblizi rezultat: 674
+
+Izraz:
+((100 * 7) - ((75 / 5) + (8 - 3))) = 674
+
+Program uspešno pronalazi tačno ili najbliže rešenje za zadati problem koristeći rekurzivnu pretragu svih mogućih kombinacija brojeva i operacija. 
+Projekat predstavlja praktičnu primenu rekurzije, backtracking algoritma i rada sa složenijim strukturama podataka.
+
+
+
+

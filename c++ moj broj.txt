@@ -1,0 +1,132 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Struktura koja čuva broj i izraz kojim je dobijen
+struct Broj{
+    int vrednost;
+    string izraz;};
+// Ciljni broj
+int cilj;
+
+// Najbolje pronađeno rešenje
+int najboljiRezultat;
+string najboljiIzraz;
+
+// Najmanja razlika od cilja
+int najmanjaRazlika;
+
+// Rekurzivna funkcija koja ispituje sve kombinacije
+void trazi(vector<Broj> brojevi){
+    // Prolazimo kroz sve trenutne brojeve
+    // Možda je neki od njih bliži cilju
+    for (Broj b : brojevi){
+        int razlika = abs(cilj - b.vrednost);
+
+        if (razlika < najmanjaRazlika){
+            najmanjaRazlika = razlika;
+            najboljiRezultat = b.vrednost;
+            najboljiIzraz = b.izraz;
+        }
+    }
+
+    // Ako je ostao samo jedan broj, nema više kombinacija
+    if (brojevi.size() == 1)
+        return;
+
+    // Biramo svaki par brojeva
+    for (int i = 0; i < brojevi.size(); i++){
+        for (int j = i + 1; j < brojevi.size(); j++){
+            Broj a = brojevi[i];
+            Broj b = brojevi[j];
+            // Novi niz bez izabranih brojeva
+            vector<Broj> novi;
+            for (int k = 0; k < brojevi.size(); k++){
+                if (k != i && k != j)
+                    novi.push_back(brojevi[k]);
+            }
+            //SABIRANJE
+            novi.push_back({
+                a.vrednost + b.vrednost,
+                "(" + a.izraz + " + " + b.izraz + ")"
+            });
+            trazi(novi);
+            novi.pop_back();
+            //ODUZIMANJE
+            novi.push_back({
+                a.vrednost - b.vrednost,
+                "(" + a.izraz + " - " + b.izraz + ")"
+            });
+            trazi(novi);
+            novi.pop_back();
+            novi.push_back({
+                b.vrednost - a.vrednost,
+                "(" + b.izraz + " - " + a.izraz + ")"
+            });
+            trazi(novi);
+            novi.pop_back();
+            //MNOŽENJE
+            novi.push_back({
+                a.vrednost * b.vrednost,
+                "(" + a.izraz + " * " + b.izraz + ")"
+            });
+            trazi(novi);
+            novi.pop_back();
+            //DELJENJE
+            // Dozvoljeno samo ako nema ostatka
+            if (b.vrednost != 0 &&
+                a.vrednost % b.vrednost == 0){
+                novi.push_back({
+                    a.vrednost / b.vrednost,
+                    "(" + a.izraz + " / " + b.izraz + ")"
+                });
+
+                trazi(novi);
+                novi.pop_back();
+            }
+            if (a.vrednost != 0 &&
+                b.vrednost % a.vrednost == 0){
+                novi.push_back({
+                    b.vrednost / a.vrednost,
+                    "(" + b.izraz + " / " + a.izraz + ")"
+                });
+                trazi(novi);
+                novi.pop_back();
+            }
+        }
+    }
+}
+
+int main(){
+    vector<Broj> brojevi(6);
+    cout << "Unesi 6 brojeva:\n";
+    // Učitavanje brojeva
+    for (int i = 0; i < 6; i++){
+        cin >> brojevi[i].vrednost;
+        // Na početku je izraz isti kao broj
+        brojevi[i].izraz =
+            to_string(brojevi[i].vrednost);
+    }
+
+    cout << "Unesi rezultat koji treba da se dobije: ";
+    cin >> cilj;
+
+    // Početne vrednosti
+    najboljiRezultat = brojevi[0].vrednost;
+    najboljiIzraz = brojevi[0].izraz;
+    najmanjaRazlika =
+        abs(cilj - najboljiRezultat);
+    // Pokretanje pretrage
+    trazi(brojevi);
+    cout << "\n===== REZULTAT =====\n";
+    cout << "Cilj: " << cilj << endl;
+    cout << "Najblizi rezultat: "
+         << najboljiRezultat << endl;
+    cout << "Razlika: "
+         << najmanjaRazlika << endl;
+    cout << "\nIzraz:\n"
+         << najboljiIzraz
+         << " = "
+         << najboljiRezultat
+         << endl;
+    return 0;
+}
