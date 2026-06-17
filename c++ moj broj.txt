@@ -7,21 +7,17 @@ struct Broj{
     string izraz;};
 // Ciljni broj
 int cilj;
-
 // Najbolje pronađeno rešenje
 int najboljiRezultat;
 string najboljiIzraz;
-
 // Najmanja razlika od cilja
 int najmanjaRazlika;
-
 // Rekurzivna funkcija koja ispituje sve kombinacije
 void trazi(vector<Broj> brojevi){
     // Prolazimo kroz sve trenutne brojeve
     // Možda je neki od njih bliži cilju
     for (Broj b : brojevi){
         int razlika = abs(cilj - b.vrednost);
-
         if (razlika < najmanjaRazlika){
             najmanjaRazlika = razlika;
             najboljiRezultat = b.vrednost;
@@ -79,7 +75,6 @@ void trazi(vector<Broj> brojevi){
                     a.vrednost / b.vrednost,
                     "(" + a.izraz + " / " + b.izraz + ")"
                 });
-
                 trazi(novi);
                 novi.pop_back();
             }
@@ -98,7 +93,7 @@ void trazi(vector<Broj> brojevi){
 
 int main(){
     vector<Broj> brojevi(6);
-    cout << "Unesi 6 brojeva:\n";
+    cout << "Unesi 4 jednocifrena broja; 1 broj od(25,75,100); 1 broj od(10,20,30...90):\n";
     // Učitavanje brojeva
     for (int i = 0; i < 6; i++){
         cin >> brojevi[i].vrednost;
@@ -106,7 +101,6 @@ int main(){
         brojevi[i].izraz =
             to_string(brojevi[i].vrednost);
     }
-
     cout << "Unesi rezultat koji treba da se dobije: ";
     cin >> cilj;
 
